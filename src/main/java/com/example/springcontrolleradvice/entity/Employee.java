@@ -1,6 +1,16 @@
 package com.example.springcontrolleradvice.entity;
 
+
+
+import javax.persistence.*;
+
+@Entity
+@Table(name ="Employee")
 public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="Emp_id")
     private Integer id;
 
     private String name;
@@ -14,6 +24,10 @@ public class Employee {
         this.name = name;
         this.age = age;
         this.location = location;
+    }
+
+    public Employee() {
+
     }
 
     public Integer getId() {
@@ -57,4 +71,5 @@ public class Employee {
                 ", location='" + location + '\'' +
                 '}';
     }
+
 }
