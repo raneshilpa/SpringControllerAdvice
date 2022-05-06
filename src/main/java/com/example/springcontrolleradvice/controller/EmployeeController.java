@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class EmployeeController {
@@ -16,14 +17,30 @@ public class EmployeeController {
     private EmployeeService eService;
 
     @GetMapping("/employees")
-    public List<Employee> getList() {
-        return eService.getList();
+    public ResponseEntity< List<Employee> >getList()
+    {
+
+
+        List<Employee> list= eService.getList();
+        if(list.size()<=0)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        }
+        return ResponseEntity.of(Optional.of(list));
+
     }
 
 
     @GetMapping("/employees/{id}")
-    public Employee get(@PathVariable Integer id) {
-        return eService.getEmployee(id);
+    public ResponseEntity<Employee> get(@PathVariable Integer id) {
+        Employee employee= eService.getEmployee(id);
+        if (employee==null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        }
+        return ResponseEntity.of(Optional.of(employee));
     }
 
     @PostMapping("/employees/addemployee")
@@ -55,7 +72,7 @@ public class EmployeeController {
 
         }
     }
-    @PutMapping("/employees/{id}")
+    @PutMapping("/employees/upadetemployee/{id}")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee,@PathVariable("id") Integer id)
     {
         try

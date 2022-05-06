@@ -1,6 +1,16 @@
 package com.example.springcontrolleradvice.entity;
 
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="Product")
+
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="Product_ID")
     private Integer id;
 
     private String name;
@@ -11,6 +21,10 @@ public class Product {
         this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public Product() {
+
     }
 
     public Integer getId() {
